@@ -52,7 +52,7 @@ namespace LetsTryWhenWeAreAlive
 
         public T Dequeue()
         {
-            if (_items.Length <= 0)
+            if (_size <= 0)
             {
                 throw new InvalidOperationException("The queue is empty");
             }
