@@ -68,6 +68,7 @@ namespace LetsTryWhenWeAreAlive
         public void Clear()
         {
             _size = 0;
+            //Array.Clear(_items, 0, _size); // Don't need to doc this but we clear the elements so that the gc can reclaim the references.
             // should clear the references too
         }
 
