@@ -91,8 +91,9 @@ namespace LetsTryWhenWeAreAlive
 
         public IEnumerator<T> GetEnumerator()
         {
-            for (int i = _size - 1; i >= 0; i--)
+            for (int i = _head, j = 0; j < _size; i++, j++)
             {
+                if (i == _items.Length) i = 0;
                 yield return _items[i];
             }
         }
