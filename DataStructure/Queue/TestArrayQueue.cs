@@ -1,4 +1,4 @@
-// WRITTEN TO TEST THE LOGIC :: HAS ISSUES (esp. DEQUEUE - when dequed the head ideally should reach end and start again)
+// WRITTEN TO TEST THE LOGIC :: NEED TESTING (esp. DEQUEUE - when dequed the head ideally should reach end and start again)
 
 
 using System;
