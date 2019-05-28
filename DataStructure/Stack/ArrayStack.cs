@@ -41,13 +41,13 @@ namespace LetsTryWhenWeAreAlive
                 throw new InvalidOperationException("The stack is empty");
             }
 
-            _size--;
-            return _items[_size];
+            //_size--;
+            //return _items[_size];
 
             // should clear the reference too
-            // var item = _items[--_size];
-            // _items[--_size] = null;
-            // return item;
+            var item = _items[--_size];
+            _items[_size] = null; // _size is reduced by 1 already
+            return item;
         }
 
         public T Peek()
