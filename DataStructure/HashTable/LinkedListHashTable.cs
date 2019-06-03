@@ -1,4 +1,3 @@
-// NOT WORKING AS EXPECTED - STRANGE COMPILATION ERROR
 using System;
 using System.Collections.Generic;
 
@@ -22,21 +21,29 @@ namespace LetsTryWhenWeAreAlive
     {
         // the list contains the actual data in the hash table. It contains together data collisions. It would be possible to use a list only when there is a collision
         // to avoid allocating the list unnecessarily but this approach makes the implementation easier to follow for this sample
-        LinkedList<HashTableNodePair<TKey, TValue>> _items = new LinkedList<HashTableNodePair<TKey, TValue>>();
-        public void Add<TKey, TValue>(TKey key, TValue value)
+        LinkedList<HashTableNodePair<TKey, TValue>> _items;
+
+        public void Add(TKey key, TValue value)
         {
-            // laxy init the linked list
-            foreach (HashTableNodePair<TKey, TValue> pair in _items)
+            if (_items == null)
             {
-                if (pair.Key.Equals(key))
+                _items = new LinkedList<HashTableNodePair<TKey, TValue>>();
+            }
+            else
+            {
+                foreach (HashTableNodePair<TKey, TValue> pair in _items)
                 {
-                    throw  new ArgumentException("The collection already contains the key");
+                    if (pair.Key.Equals(key))
+                    {
+                        throw new ArgumentException("The collection already contains the key");
+                    }
                 }
             }
+
             _items.AddFirst(new HashTableNodePair<TKey, TValue>(key, value));
         }
 
-        public void Update<TKey, TValue>(TKey key, TValue value)
+        public void Update(TKey key, TValue value)
         {
             bool updated = false;
             if (_items != null)
@@ -57,7 +64,7 @@ namespace LetsTryWhenWeAreAlive
             }
         }
 
-        public bool Remove<TKey>(TKey key)
+        public bool Remove(TKey key)
         {
             bool removed = false;
             if (_items != null)
@@ -77,7 +84,7 @@ namespace LetsTryWhenWeAreAlive
             return removed;
         }
 
-        public bool TryGetvalue<TKey, TValue>(TKey key, out TValue value)
+        public bool TryGetvalue(TKey key, out TValue value)
         {
             value = default(TValue);
             bool found = false;
@@ -221,13 +228,16 @@ namespace LetsTryWhenWeAreAlive
             }
         }
 
-        public IEnumerable<HashTableArrayNode<TKey, TValue>> Items
+        public IEnumerable<HashTableNodePair<TKey, TValue>> Items
         {
             get
             {
-                foreach (HashTableArrayNode<TKey, TValue> node in _array)
+                foreach (HashTableArrayNode<TKey, TValue> nodes in _array)
                 {
-                    yield return node;
+                    foreach (HashTableNodePair<TKey, TValue> node in nodes.Items)
+                    {
+                        yield return node;    
+                    }
                 }
             }
         }
